@@ -1,0 +1,5 @@
+endpoint:
+  node: "I_RUN_MY_OWN_NODE_BECAUSE_I_AM_A_CHAD_YAML"
+  relay: "I_RUN_MY_OWN_NODE_BECAUSE_I_AM_A_MEGA_CHAD_YAML"
+verify:
+  slot: 84
