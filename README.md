@@ -17,6 +17,23 @@ of using the payload they received from the Relays.
 This can be the case when a Proposer decides to use the most profitable block it received and 
 extract more value for itself.
 
+## Usage
+
+First, you must either set a few environment variable values using the ones provided in the [`.
+envrc.example`](./.envrc.example) file or set the corresponding values in the
+[`config.example.json`](./config.example.json) or [`config.example.yaml`](./config.example.yaml) file.
+
+Then, run the following command to build the project:
+```shell
+go build -o charon main.go
+```
+
+To start a single analysis of a given slot, use the following command (don't provide the 
+`--slot` flag if you already set it in the environment / configuration file):
+```shell
+./charon verify --slot <SLOT_NUMBER>
+```
+
 ## Disclaimer
 
 This project is a personal project and might contain issues resulting in false data being reported.
