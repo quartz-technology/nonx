@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"github.com/0xpanoramix/frd-go/constants"
-	"github.com/spf13/pflag"
+	"github.com/quartz-technology/charon/root"
 	"github.com/spf13/viper"
 	"log"
 	"os"
@@ -35,9 +34,10 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	// Registering specific root flags.
-	rootFlags(viper.GetViper(), rootCmd.Flags())
+	rootCmd.PersistentFlags().StringVar(&configurationFilePath, "config", "", "path to the configuration file")
+
 	// Registering the configuration flags, mapped to the environment and to a configuration file.
-	configurationFlags(viper.GetViper(), rootCmd.Flags())
+	root.Flags(viper.GetViper(), rootCmd.Flags())
 
 	// Add the subcommand verify.
 	rootCmd.AddCommand(verifyCmd)
@@ -69,49 +69,4 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		log.Println("Using config file:", viper.ConfigFileUsed())
 	}
-}
-
-const (
-	endpointExecutionClientNodeFlag     = "endpoint-node"
-	endpointExecutionClientNodeViperKey = "endpoint.node"
-	endpointExecutionClientNodeEnv      = "CHARON_ENDPOINT_NODE"
-
-	endpointRelayFlag     = "endpoint-relay"
-	endpointRelayViperKey = "endpoint.relay"
-	endpointRelayEnv      = "CHARON_ENDPOINT_RELAY"
-)
-
-func rootFlags(_ *viper.Viper, f *pflag.FlagSet) {
-	// --config
-	rootCmd.PersistentFlags().StringVar(&configurationFilePath, "config", "", "path to the configuration file")
-}
-
-func configurationFlags(v *viper.Viper, f *pflag.FlagSet) {
-	// --endpoint-node
-	f.String(endpointExecutionClientNodeFlag, "http://localhost:8545", "The execution client JSON-RPC URL.")
-	err := v.BindPFlag(endpointExecutionClientNodeViperKey, f.Lookup(endpointExecutionClientNodeFlag))
-	cobra.CheckErr(err)
-	err = v.BindEnv(endpointExecutionClientNodeViperKey, endpointExecutionClientNodeEnv)
-	cobra.CheckErr(err)
-
-	// --endpoint-relay
-	f.String(endpointRelayFlag, constants.FlashbotsRelayMainnet, "The relay endpoint to query the Data Transparency API.")
-	err = v.BindPFlag(endpointRelayViperKey, f.Lookup(endpointRelayFlag))
-	cobra.CheckErr(err)
-	err = v.BindEnv(endpointRelayViperKey, endpointRelayEnv)
-	cobra.CheckErr(err)
-}
-
-type charonConfig struct {
-	executionClientNodeEndpoint string
-	relayEndpoint               string
-}
-
-func charonConfigFromViper(v *viper.Viper) *charonConfig {
-	configuration := &charonConfig{}
-
-	configuration.executionClientNodeEndpoint = v.GetString(endpointExecutionClientNodeViperKey)
-	configuration.relayEndpoint = v.GetString(endpointRelayViperKey)
-
-	return configuration
 }
