@@ -1,0 +1,9 @@
+{
+  "endpoint": {
+    "node": "I_RUN_MY_OWN_NODE_BECAUSE_I_AM_A_CHAD_JSON",
+    "relay": "I_RUN_MY_OWN_NODE_BECAUSE_I_AM_A_MEGA_CHAD_JSON"
+  },
+  "verify": {
+    "slot": 42
+  }
+}
