@@ -41,6 +41,8 @@ func init() {
 
 	// Add the subcommand verify.
 	rootCmd.AddCommand(verifyCmd)
+	// Add the subcommand watch.
+	rootCmd.AddCommand(watchCmd)
 }
 
 var configurationFilePath string
