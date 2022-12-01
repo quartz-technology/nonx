@@ -17,6 +17,13 @@ of using the payload they received from the Relays.
 This can be the case when a Proposer decides to use the most profitable block it received and 
 extract more value for itself.
 
+## Disclaimer
+
+This project is a personal project and might contain issues resulting in false data being reported.
+Refer to the [License](./LICENSE) for more.
+For now, I recommend not to use any of the resulting data for external projects.
+Please contact one of the maintainer if you've found any issue.
+
 ## Authors
 
 Made with ❤️ by 🤖 [0xpanoramix](https://github.com/0xpanoramix/) 🤖
