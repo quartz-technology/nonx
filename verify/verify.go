@@ -12,7 +12,7 @@ var (
 
 func Run(cfg *Configuration) error {
 	// First, we retrieve the payloads sent to the proposers by the relays.
-	proposerPayloadsDelivered, err := cfg.dc.GetProposerPayloadsDelivered(
+	proposerPayloadsDelivered, err := cfg.base.DC.GetProposerPayloadsDelivered(
 		&data.GetProposerPayloadsDeliveredOptions{
 			Slot: cfg.slot,
 		},
@@ -23,7 +23,7 @@ func Run(cfg *Configuration) error {
 	}
 
 	// Then, we retrieve the block actually proposed to the network.
-	proposedBlock, err := cfg.ec.GetPartialBeaconBellatrixBlock(cfg.slot)
+	proposedBlock, err := cfg.base.EC.GetPartialBeaconBellatrixBlock(cfg.slot)
 	if err != nil {
 		logrus.WithError(err).Error("failed to retrieve proposed payload")
 		return err

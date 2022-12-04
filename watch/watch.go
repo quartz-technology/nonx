@@ -14,7 +14,7 @@ func Run(cfg *Configuration) error {
 	latestRelaySlot := uint64(0)
 
 	for ; ; <-ticker.C {
-		relayPayload, err := GetLatestPayloadDeliveredToRelay(cfg.dc)
+		relayPayload, err := GetLatestPayloadDeliveredToRelay(cfg.base.DC)
 		if err != nil {
 			return err
 		}
@@ -24,7 +24,7 @@ func Run(cfg *Configuration) error {
 		}
 		latestRelaySlot = relayPayload.Slot
 
-		proposedBlock, err := cfg.ec.GetPartialBeaconBellatrixBlock(relayPayload.Slot)
+		proposedBlock, err := cfg.base.EC.GetPartialBeaconBellatrixBlock(relayPayload.Slot)
 		if err != nil {
 			return err
 		}
