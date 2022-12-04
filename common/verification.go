@@ -2,7 +2,6 @@ package common
 
 import (
 	"github.com/flashbots/go-boost-utils/types"
-	"github.com/quartz-technology/charon/verify"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,7 +15,7 @@ func VerifyCommitmentForPayloadHashes(relayPayload *types.BidTrace, proposedPayl
 
 	// The two hashes differ, there is an issue.
 	if proposedPayloadHash != committedPayloadHash {
-		logrus.WithError(verify.ErrBrokenCommitment).WithFields(
+		logrus.WithError(ErrBrokenCommitment).WithFields(
 			logrus.Fields{
 				"slot":                   relayPayload.Slot,
 				"proposed_payload_hash":  proposedPayloadHash,
