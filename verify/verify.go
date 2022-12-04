@@ -1,24 +1,20 @@
 package verify
 
 import (
-	"errors"
 	"github.com/0xpanoramix/frd-go/data"
+	"github.com/quartz-technology/charon/common"
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	ErrBrokenCommitment = errors.New("proposed and committed payloads differ")
-)
-
 func Run(cfg *Configuration) error {
-	// First, we retrieve the payloads sent to the proposers by the relays.
-	proposerPayloadsDelivered, err := cfg.base.DC.GetProposerPayloadsDelivered(
+	// Retrieves the payload delivered by the relay to the proposer.
+	relayPayload, err := cfg.base.DC.GetProposerPayloadsDelivered(
 		&data.GetProposerPayloadsDeliveredOptions{
 			Slot: cfg.slot,
 		},
 	)
 	if err != nil {
-		logrus.WithError(err).Error("failed to retrieve distributed payload by relay")
+		logrus.WithError(err).Error("failed to retrieve delivered payload by relay")
 		return err
 	}
 
@@ -29,23 +25,10 @@ func Run(cfg *Configuration) error {
 		return err
 	}
 
-	proposedPayload := proposerPayloadsDelivered[0].BlockHash.String()
-	committedPayload := proposedBlock.Body.ExecutionPayload.BlockHash
-
-	// Finally, we compare the two block hashes.
-	if proposedPayload != committedPayload {
-		logrus.WithError(ErrBrokenCommitment).WithFields(
-			logrus.Fields{
-				"proposed_payload":  proposedPayload,
-				"committed_payload": committedPayload,
-			},
-		).Error("commitment has not been respected by the proposer")
-		return ErrBrokenCommitment
+	// And finally we compare the two to check if the commitment holds.
+	if !common.VerifyCommitmentForPayloadHashes(&relayPayload[0], proposedBlock.Body.ExecutionPayload.BlockHash) {
+		return common.ErrBrokenCommitment
 	}
 
-	logrus.WithField(
-		"proposer_public_key",
-		proposerPayloadsDelivered[0].ProposerPubkey.String(),
-	).Infoln("commitment has been respected by proposer")
 	return nil
 }
