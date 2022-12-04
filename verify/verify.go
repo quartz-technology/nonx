@@ -15,6 +15,7 @@ func Run(cfg *Configuration) error {
 	)
 	if err != nil {
 		logrus.WithError(err).Error("failed to retrieve delivered payload by relay")
+
 		return err
 	}
 
@@ -22,6 +23,7 @@ func Run(cfg *Configuration) error {
 	proposedBlock, err := cfg.base.EC.GetPartialBeaconBellatrixBlock(cfg.slot)
 	if err != nil {
 		logrus.WithError(err).Error("failed to retrieve proposed payload")
+
 		return err
 	}
 

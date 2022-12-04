@@ -22,6 +22,7 @@ func VerifyCommitmentForPayloadHashes(relayPayload *types.BidTrace, proposedPayl
 				"committed_payload_hash": committedPayloadHash,
 			},
 		).Error("❌ commitment has not been respected by the proposer")
+
 		return false
 	}
 
@@ -33,5 +34,6 @@ func VerifyCommitmentForPayloadHashes(relayPayload *types.BidTrace, proposedPayl
 			"committed_payload_hash": committedPayloadHash,
 		},
 	).Infoln("✅ commitment has been respected by proposer")
+
 	return true
 }
