@@ -22,6 +22,7 @@ func Run(cfg *Configuration) error {
 		relayPayload, err := GetLatestPayloadDeliveredByRelay(cfg.base.DC)
 		if err != nil {
 			logrus.WithError(err).Error("failed to retrieve latest payload delivered by the relay")
+
 			continue
 		}
 
@@ -29,6 +30,7 @@ func Run(cfg *Configuration) error {
 		if latestRelaySlot == relayPayload.Slot {
 			continue
 		}
+
 		latestRelaySlot = relayPayload.Slot
 
 		// Retrieves the corresponding block from the beacon chain.
@@ -37,6 +39,7 @@ func Run(cfg *Configuration) error {
 			logrus.WithError(err).WithFields(logrus.Fields{
 				"slot": relayPayload.Slot,
 			}).Error("failed to retrieve beacon block")
+
 			continue
 		}
 
