@@ -4,57 +4,50 @@ import (
 	"errors"
 	"github.com/0xpanoramix/frd-go/data"
 	"github.com/flashbots/go-boost-utils/types"
-	"github.com/quartz-technology/charon/verify"
+	"github.com/quartz-technology/charon/common"
 	"github.com/sirupsen/logrus"
 	"time"
 )
 
+// Run executes the main watcher logic. For every new proposer payload delivered by the relay,
+// it asks the beacon client the corresponding block to perform the comparison and therefore
+// verify if the commitment holds.
 func Run(cfg *Configuration) error {
 	ticker := time.NewTicker(12 * time.Second)
 	latestRelaySlot := uint64(0)
 
+	// We run the analysis for each slot.
 	for ; ; <-ticker.C {
-		relayPayload, err := GetLatestPayloadDeliveredToRelay(cfg.base.DC)
+		// Retrieves the last recorded delivered payload to a proposer by the relay.
+		relayPayload, err := GetLatestPayloadDeliveredByRelay(cfg.base.DC)
 		if err != nil {
-			return err
+			logrus.WithError(err).Error("failed to retrieve latest payload delivered by the relay")
+			continue
 		}
 
+		// If this is not a mev-boost block, we skip and wait for the next slot.
 		if latestRelaySlot == relayPayload.Slot {
 			continue
 		}
 		latestRelaySlot = relayPayload.Slot
 
+		// Retrieves the corresponding block from the beacon chain.
 		proposedBlock, err := cfg.base.EC.GetPartialBeaconBellatrixBlock(relayPayload.Slot)
 		if err != nil {
-			return err
-		}
-
-		proposedPayloadHash := relayPayload.BlockHash.String()
-		committedPayloadHash := proposedBlock.Body.ExecutionPayload.BlockHash
-
-		// Finally, we compare the two block hashes.
-		if proposedPayloadHash != committedPayloadHash {
-			logrus.WithError(verify.ErrBrokenCommitment).WithFields(
-				logrus.Fields{
-					"proposed_payload_hash":  proposedPayloadHash,
-					"committed_payload_hash": committedPayloadHash,
-					"slot":                   relayPayload.Slot,
-				},
-			).Error("❌ commitment has not been respected by the proposer")
+			logrus.WithError(err).WithFields(logrus.Fields{
+				"slot": relayPayload.Slot,
+			}).Error("failed to retrieve beacon block")
 			continue
 		}
 
-		logrus.WithFields(
-			logrus.Fields{
-				"proposed_payload_hash":  proposedPayloadHash,
-				"committed_payload_hash": committedPayloadHash,
-				"slot":                   relayPayload.Slot,
-			},
-		).Infoln("✅ commitment has been respected by proposer")
+		// Verifies if the commitment holds or not.
+		common.VerifyCommitmentForPayloadHashes(relayPayload, proposedBlock.Body.ExecutionPayload.BlockHash)
 	}
 }
 
-func GetLatestPayloadDeliveredToRelay(dc *data.TransparencyClient) (*types.BidTrace, error) {
+// GetLatestPayloadDeliveredByRelay uses the data transparency client to get the latest proposer
+// payload delivered, which is used in the comparison with the proposed block to the network.
+func GetLatestPayloadDeliveredByRelay(dc *data.TransparencyClient) (*types.BidTrace, error) {
 	res, err := dc.GetProposerPayloadsDelivered(&data.GetProposerPayloadsDeliveredOptions{Limit: 1})
 	if err != nil {
 		return nil, err
