@@ -1,21 +1,19 @@
 package watch
 
 import (
-	"github.com/0xpanoramix/frd-go/data"
 	"github.com/quartz-technology/charon/common"
-	"github.com/quartz-technology/charon/root"
 	"github.com/spf13/viper"
-	"time"
 )
 
+// Configuration is used by the watch Run method and holds the common configuration only,
+// as it does not require any extra configuration to perform the analysis for now.
 type Configuration struct {
-	dc *data.TransparencyClient
-	ec *common.EthClient
+	base *common.BaseConfiguration
 }
 
+// ConfigurationFromViper creates a new Configuration using the base configuration extractor.
 func ConfigurationFromViper(v *viper.Viper) *Configuration {
 	return &Configuration{
-		dc: data.NewTransparencyClient(root.GetEndpointRelay(v), time.Second),
-		ec: common.NewEthClient(root.GetEndpointExecutionClient(v)),
+		base: common.BaseConfigurationFromViper(v),
 	}
 }

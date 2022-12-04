@@ -1,23 +1,22 @@
 package verify
 
 import (
-	"github.com/0xpanoramix/frd-go/data"
 	"github.com/quartz-technology/charon/common"
-	"github.com/quartz-technology/charon/root"
 	"github.com/spf13/viper"
-	"time"
 )
 
+// Configuration holds the data transparency and beacon clients as well as the desired slot to
+// analyze.
 type Configuration struct {
-	dc   *data.TransparencyClient
-	ec   *common.EthClient
+	base *common.BaseConfiguration
 	slot uint64
 }
 
+// ConfigurationFromViper creates a new Configuration using the base configuration extractor and
+// the value for the bound --slot flag and its corresponding viper key.
 func ConfigurationFromViper(v *viper.Viper) *Configuration {
 	return &Configuration{
-		dc:   data.NewTransparencyClient(root.GetEndpointRelay(v), time.Second),
-		ec:   common.NewEthClient(root.GetEndpointExecutionClient(v)),
+		base: common.BaseConfigurationFromViper(v),
 		slot: GetSlotToVerify(v),
 	}
 }
