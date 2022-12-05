@@ -1,5 +1,15 @@
-# charon
+# <h1 align="center"> charon </h1>
+
+<p align="center">
+    <img src="./.github/assets/dalle_cover.png" width="400" alt="A DALL-E representation of a 
+photo of the Grim Reaper on a boat with a purple background and a dark theme in cyberpunk style">
+</p>
+
+<p align="center">
 🪬 A verifier for mev-boost commitments sent by proposers to relays 🪬
+</p>
+
+Cover by [DALL-E](https://openai.com/dall-e-2/).
 
 ## Introduction
 
