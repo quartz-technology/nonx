@@ -72,7 +72,7 @@ jobs:
       - name: "Runs unit tests"
         run: make unit-tests
         env:
-          CHARON_ENDPOINT_NODE: ${{ secrets.CHARON_ENDPOINT_NODE }}
+          NONX_ENDPOINT_NODE: ${{ secrets.NONX_ENDPOINT_NODE }}
 
   build:
     needs: unit-tests

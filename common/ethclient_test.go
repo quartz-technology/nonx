@@ -8,7 +8,7 @@ import (
 )
 
 func TestEthClient_GetPartialBeaconBellatrixBlock(t *testing.T) {
-	client := NewEthClient(os.Getenv("CHARON_ENDPOINT_NODE"))
+	client := NewEthClient(os.Getenv("NONX_ENDPOINT_NODE"))
 
 	b, err := client.GetPartialBeaconBellatrixBlock(5253886)
 	require.NoError(t, err)

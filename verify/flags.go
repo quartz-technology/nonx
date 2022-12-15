@@ -14,7 +14,7 @@ func Flags(v *viper.Viper, f *pflag.FlagSet) {
 const (
 	slotViperKey = "verify.slot"
 	slotFlag     = "slot"
-	slotEnv      = "CHARON_VERIFY_SLOT"
+	slotEnv      = "NONX_VERIFY_SLOT"
 )
 
 // verifySlotFlag defines a --slot flag and binds it to a viper key used to extract its
