@@ -2,7 +2,7 @@ package verify
 
 import (
 	"github.com/0xpanoramix/frd-go/data"
-	"github.com/quartz-technology/charon/common"
+	"github.com/quartz-technology/nonx/common"
 	"github.com/sirupsen/logrus"
 )
 

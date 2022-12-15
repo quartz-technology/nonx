@@ -1,4 +1,4 @@
-BIN	=	charon
+BIN	=	nonx
 
 all:
 	go build -o $(BIN) main.go

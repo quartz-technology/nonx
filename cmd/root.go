@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/quartz-technology/charon/root"
+	"github.com/quartz-technology/nonx/root"
 	"github.com/spf13/viper"
 	"log"
 	"os"
