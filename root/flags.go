@@ -10,11 +10,11 @@ import (
 const (
 	endpointExecutionClientNodeFlag     = "endpoint-node"
 	endpointExecutionClientNodeViperKey = "endpoint.node"
-	endpointExecutionClientNodeEnv      = "CHARON_ENDPOINT_NODE"
+	endpointExecutionClientNodeEnv      = "NONX_ENDPOINT_NODE"
 
 	endpointRelayFlag     = "endpoint-relay"
 	endpointRelayViperKey = "endpoint.relay"
-	endpointRelayEnv      = "CHARON_ENDPOINT_RELAY"
+	endpointRelayEnv      = "NONX_ENDPOINT_RELAY"
 )
 
 func Flags(v *viper.Viper, f *pflag.FlagSet) {

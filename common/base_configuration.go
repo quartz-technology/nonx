@@ -2,7 +2,7 @@ package common
 
 import (
 	"github.com/0xpanoramix/frd-go/data"
-	"github.com/quartz-technology/charon/root"
+	"github.com/quartz-technology/nonx/root"
 	"github.com/spf13/viper"
 	"time"
 )

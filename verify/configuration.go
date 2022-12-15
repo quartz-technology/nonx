@@ -1,7 +1,7 @@
 package verify
 
 import (
-	"github.com/quartz-technology/charon/common"
+	"github.com/quartz-technology/nonx/common"
 	"github.com/spf13/viper"
 )
 

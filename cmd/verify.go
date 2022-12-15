@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/quartz-technology/charon/verify"
+	"github.com/quartz-technology/nonx/verify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

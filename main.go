@@ -1,6 +1,6 @@
 package main
 
-import "github.com/quartz-technology/charon/cmd"
+import "github.com/quartz-technology/nonx/cmd"
 
 func main() {
 	cmd.Execute()

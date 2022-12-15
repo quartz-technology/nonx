@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/0xpanoramix/frd-go/data"
 	"github.com/flashbots/go-boost-utils/types"
-	"github.com/quartz-technology/charon/common"
+	"github.com/quartz-technology/nonx/common"
 	"github.com/sirupsen/logrus"
 	"time"
 )

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/quartz-technology/charon/root"
+	"github.com/quartz-technology/nonx/root"
 	"github.com/spf13/viper"
 	"log"
 	"os"
@@ -11,10 +11,10 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "charon",
+	Use:   "nonx",
 	Short: "A verifier for mev-boost commitments sent by proposers to relays.",
 	Long: `
-🪬 Charon uses the Flashbots Data Transparency API to verify if a proposer broke its commitments
+🪬 Nonx uses the Flashbots Data Transparency API to verify if a proposer broke its commitments
 to use a relay's given payload.
 
 🤖 It is able to listen to new mev-boost blocks as they are proposed to the network or inspect a
@@ -55,13 +55,13 @@ func initConfig() {
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".charon-config" (without extension).
+		// Search config in home directory with name ".nonx-config" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigType("yaml")
-		viper.SetConfigName(".charon-config")
+		viper.SetConfigName(".nonx-config")
 	}
 
-	viper.SetEnvPrefix("CHARON")
+	viper.SetEnvPrefix("NONX")
 	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.
