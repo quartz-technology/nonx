@@ -1,4 +1,4 @@
-# <h1 align="center"> charon </h1>
+# <h1 align="center"> nonx </h1>
 
 <p align="center">
     <img src="./.github/assets/dalle_cover.png" width="400" alt="A DALL-E representation of a 
@@ -20,9 +20,9 @@ proposer commits to use the most profitable payload sent by the relay and only t
 This is possible because the Relays which implement the Data Transparency API expose these 
 payloads. Once they have been proposed, we can compare those two and check if they match or not.
 
-## Charon
+## Nonx
 
-Charon is a project focused on exposing if the Proposers using mev-boost break their commitments 
+Nonx is a project focused on exposing if the Proposers using mev-boost break their commitments 
 of using the payload they received from the Relays.
 This can be the case when a Proposer decides to use the most profitable block it received and 
 extract more value for itself.
@@ -43,12 +43,12 @@ make all
 To start a single analysis of a given slot, use the following command (don't provide the 
 `--slot` flag if you already set it in the environment / configuration file):
 ```shell
-./charon verify --slot <SLOT_NUMBER>
+./nonx verify --slot <SLOT_NUMBER>
 ```
 
 Example:
 ```shell
-$ - ./charon verify --slot 5253886
+$ - ./nonx verify --slot 5253886
 INFO[0000] ✅ commitment has been respected by proposer   committed_payload_hash=0xcffee69df32c924ff2de6a3975b52ce69208c540e7afd8f9cdc9b7efac119cff proposed_payload_hash=0xcffee69df32c924ff2de6a3975b52ce69208c540e7afd8f9cdc9b7efac119cff slot=5253886
 ```
 
@@ -57,12 +57,12 @@ INFO[0000] ✅ commitment has been respected by proposer   committed_payload_has
 To run the watcher, which will verify every new payload delivered by the relay to the proposers, 
 run the following command:
 ```
-./charon watch
+./nonx watch
 ```
 
 Example:
 ```shell
-$ - ./charon watch
+$ - ./nonx watch
 INFO[0000] ✅ commitment has been respected by proposer   committed_payload_hash=0x255ccbf4e495d768ce453d30f2ae7050ed7123d24bf3d5e1b24940ab5908b499 proposed_payload_hash=0x255ccbf4e495d768ce453d30f2ae7050ed7123d24bf3d5e1b24940ab5908b499 slot=5280458
 INFO[0024] ✅ commitment has been respected by proposer   committed_payload_hash=0x7b999b60dc70bedb3238b56a94f533cf446cdb077110d9781140323d203dca8b proposed_payload_hash=0x7b999b60dc70bedb3238b56a94f533cf446cdb077110d9781140323d203dca8b slot=5280461
 INFO[0048] ✅ commitment has been respected by proposer   committed_payload_hash=0x7d3c120dce693edeecc55a16699e20ab1b88147a6f2f31bc95dfcb806b53eda2 proposed_payload_hash=0x7d3c120dce693edeecc55a16699e20ab1b88147a6f2f31bc95dfcb806b53eda2 slot=5280463
